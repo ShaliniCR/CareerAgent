@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: careerbuddy-backend
+    runtime: python
+    rootDir: backend
+    # A persistent disk needs a paid instance (free instances can't attach disks).
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: MEMORY_DB_PATH
+        value: /var/data/memory.db
+      - key: ANTHROPIC_API_KEY
+        sync: false   # Render asks for this value when you apply the Blueprint
+      - key: FRONTEND_ORIGINS
+        sync: false   # e.g. https://careerbuddy.vercel.app (comma-separated)
+    disk:
+      name: careerbuddy-data
+      mountPath: /var/data
+      sizeGB: 1

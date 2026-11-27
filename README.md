@@ -23,7 +23,8 @@ npm run dev            # http://localhost:5173
 
 ## Deploy
 
-- **Backend (Render or Railway):** start command `uvicorn main:app --host 0.0.0.0 --port $PORT`. Set these environment variables:
+- **Backend on Render:** the repo includes a Blueprint, [render.yaml](render.yaml). In Render, choose **New → Blueprint**, select this repo, and enter `ANTHROPIC_API_KEY` and `FRONTEND_ORIGINS` when asked. The Blueprint uses a Starter instance with a 1 GB disk mounted at `/var/data`, because free instances can't keep `memory.db` across restarts.
+- **Backend on another host (Railway etc.):** start command `uvicorn main:app --host 0.0.0.0 --port $PORT`. Set these environment variables:
   - `ANTHROPIC_API_KEY`
   - `FRONTEND_ORIGINS=https://<your-frontend-domain>`
   - `MEMORY_DB_PATH=/data/memory.db`, with a persistent disk or volume mounted at `/data`
